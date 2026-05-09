@@ -40,7 +40,7 @@ export default function Hero() {
           boxShadow: '0 12px 40px rgba(82,183,136,0.15), 0 4px 16px rgba(91,125,177,0.1)',
         }}>
           <img
-            src="/profile.png"
+            src="/personal-site-v2/profile.png"
             alt="麻明"
             loading="lazy"
             decoding="async"
