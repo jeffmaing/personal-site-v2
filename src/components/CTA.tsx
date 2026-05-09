@@ -133,7 +133,7 @@ export default function CTA({ onOpenChat }: CTAProps) {
           marginBottom: '48px',
         }}>
           <a
-            href="/resume-麻明.pdf"
+            href="/personal-site-v2/resume-麻明.pdf"
             download
             style={{
               display: 'inline-flex',

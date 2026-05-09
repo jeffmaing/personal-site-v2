@@ -16,7 +16,7 @@ export const siteConfig = {
 
   // === Story ===
   story: {
-    photoSrc: "/hero.png",
+    photoSrc: "/personal-site-v2/hero.png",
     paragraphs: [
       { text: "我在汽车行业干了 19 年。从奔驰到宝马，从保时捷到雷克萨斯，一路做的是经销商管理和数字化落地。", highlight: false },
       { text: "ChatGPT 出现后，我发现了一个残酷的现实：会用 AI 的人，正在把不会用的人甩开。", highlight: true },
