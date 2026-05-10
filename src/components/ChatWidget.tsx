@@ -151,24 +151,24 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
           animation: 'chatSlideIn 0.3s ease',
         }}
       >
-        {/* Header */}
+          {/* Header */}
         <div style={{
           padding: "16px 18px 12px",
-          background: "#ffffff",
-          borderBottom: "1px solid #2a2a2a",
+          background: "#f7f8fc",
+          borderBottom: "1px solid #e5e7eb",
           display: "flex",
           alignItems: "center",
-          gap: 10,
+          gap: 12,
         }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: 10,
-            background: "linear-gradient(135deg, #5b7db1, #8aa5c8)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-          </div>
+          {/* Profile photo */}
+          <img
+            src="/personal-site-v2/profile.png"
+            alt="麻明"
+            style={{
+              width: 40, height: 40, borderRadius: "50%",
+              objectFit: "cover", border: "2px solid #52b788",
+            }}
+          />
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 14, fontWeight: 600, color: "#1e2a3a" }}>麻明的 AI 助理</div>
             <div style={{ fontSize: 11, color: "#52b788", display: "flex", alignItems: "center", gap: 3 }}>
@@ -194,12 +194,14 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
           display: "flex",
           flexDirection: "column",
           gap: 12,
+          background: "#ffffff",
         }}>
           {messages.length === 0 && (
             <div style={{ marginBottom: 8 }}>
               <div style={{
-                padding: 12, background: "#2a2a2a", borderRadius: 12,
-                fontSize: 13, color: "#6b7a8d", lineHeight: 1.6, marginBottom: 12,
+                padding: 14, background: "#f0f2f7", borderRadius: 14,
+                fontSize: 14, color: "#1e2a3a", lineHeight: 1.7, marginBottom: 16,
+                border: "1px solid #e5e7eb",
               }}>
                 你好！我是麻明的 AI 助理。<br />
                 你可以问我他的职业经历、项目经验，或者 AI 在汽车行业的实际应用。
@@ -210,13 +212,14 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
                   onClick={() => handleSend(false, q)}
                   style={{
                     display: "block", width: "100%", marginBottom: 8,
-                    padding: "10px 14px", textAlign: "left",
-                    background: "#2a2a2a", border: "1px solid #333",
-                    borderRadius: 10, fontSize: 13, color: "#1e2a3a",
-                    cursor: "pointer", transition: "background 0.2s",
+                    padding: "12px 14px", textAlign: "left",
+                    background: "#ffffff", border: "1px solid #e5e7eb",
+                    borderRadius: 12, fontSize: 14, color: "#1e2a3a",
+                    cursor: "pointer", transition: "all 0.2s",
+                    fontWeight: 500,
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "#333")}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = "#2a2a2a")}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "#f0f2f7"; e.currentTarget.style.borderColor = "#5b7db1" }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "#ffffff"; e.currentTarget.style.borderColor = "#e5e7eb" }}
                 >
                   {q}
                 </button>
@@ -238,8 +241,9 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
                 whiteSpace: "pre-wrap",
                 background: m.role === "user"
                   ? "linear-gradient(135deg, #5b7db1, #8aa5c8)"
-                  : "#2a2a2a",
+                  : "#f0f2f7",
                 color: m.role === "user" ? "#fff" : "#1e2a3a",
+                border: m.role === "assistant" ? "1px solid #e5e7eb" : "none",
                 borderBottomRightRadius: m.role === "user" ? 4 : 16,
                 borderBottomLeftRadius: m.role === "assistant" ? 4 : 16,
               }}>
@@ -252,7 +256,7 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
             <div style={{ display: "flex", gap: 4, padding: "8px 0" }}>
               {[0, 1, 2].map(i => (
                 <span key={i} style={{
-                  width: 6, height: 6, borderRadius: "50%", background: "#555",
+                  width: 8, height: 8, borderRadius: "50%", background: "#5b7db1",
                   animation: `blink 1.4s infinite ${i * 0.2}s`,
                 }} />
               ))}
@@ -263,11 +267,11 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
 
         {/* Input */}
         <div style={{
-          padding: "10px 14px",
-          borderTop: "1px solid #2a2a2a",
+          padding: "12px 14px",
+          borderTop: "1px solid #e5e7eb",
           display: "flex",
           gap: 8,
-          background: "#ffffff",
+          background: "#f7f8fc",
         }}>
           <input
             ref={inputRef}
@@ -283,9 +287,9 @@ export default function ChatWidget({ isOpen, onClose }: ChatWidgetProps) {
             disabled={loading}
             style={{
               flex: 1, padding: "10px 14px",
-              borderRadius: 10, border: "1px solid #333",
+              borderRadius: 10, border: "1px solid #d1d5db",
               fontSize: 14, outline: "none",
-              background: "#2a2a2a",
+              background: "#ffffff",
               color: "#1e2a3a",
             }}
           />
