@@ -37,7 +37,7 @@ const CAREER_DATA: CareerStep[] = [
     color: "#1e2a3a",
     description: "搭建经销商\"筹备-开业-运营\"三阶辅导体系，主导开发辅导管理系统（任务管理、案例库、BI看板），推动辅导流程线上化。",
     metrics: [
-      { label: "新网点辅导", value: "28 家", detail: "帮助门店平均提前 2 个月实现盈利" },
+      { label: "新网点辅导", value: "34 家", detail: "帮助门店平均提前 2 个月实现盈利" },
       { label: "客户满意度", value: "90 分", detail: "提升服务标准" },
       { label: "培训周期", value: "3月→1月", detail: "新员工培训效率提升" },
     ],
