@@ -40,6 +40,7 @@ const FOCUS = [
 export default function About() {
   return (
     <>
+      {/* Intro + portrait */}
       <section className="section">
         <div className="container">
           <SectionHeader eyebrow="ABOUT" title="关于我" />
@@ -80,6 +81,7 @@ export default function About() {
                 background: 'linear-gradient(180deg, #EEF2F7, #DDE4ED)',
                 aspectRatio: '4 / 5',
                 border: '1px solid var(--line)',
+                boxShadow: 'var(--shadow-md)',
               }}
             >
               <img
@@ -96,6 +98,68 @@ export default function About() {
               .about-grid { grid-template-columns: 1fr !important; }
             }
           `}</style>
+        </div>
+      </section>
+
+      {/* Why me — storytelling */}
+      <section className="section section--alt">
+        <div className="container" style={{ maxWidth: 860 }}>
+          <SectionHeader eyebrow="WHY ME" title="为什么是我" />
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+            <p style={{ fontSize: 20, lineHeight: 1.7, color: 'var(--ink)', fontWeight: 500, letterSpacing: '-0.01em' }}>
+              我不是 AI 从业者出身。
+              <br />
+              我来自汽车行业。
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.85, color: 'var(--ink-2)' }}>
+              经历过主机厂、咨询公司、数字化项目，所以我更关注的从来不是「这个模型有多强」，
+              而是：
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 4 }}>
+              {[
+                { k: '业务如何运行', v: '一个流程从发起到闭环，中间经过多少环节、多少角色、多少数据断点。' },
+                { k: '系统如何落地', v: '系统上线只是开始。团队能不能用起来，数据能不能流起来，才是真问题。' },
+                { k: 'AI 如何真正进入流程', v: '不是套一个模型，而是把 AI 放在它真正能解决问题的位置上。' },
+              ].map((item, i) => (
+                <div
+                  key={item.k}
+                  className="why-row"
+                  style={{
+                    display: 'flex',
+                    gap: 18,
+                    alignItems: 'flex-start',
+                    background: '#fff',
+                    border: '1px solid var(--line)',
+                    borderRadius: 'var(--radius)',
+                    padding: '20px 24px',
+                  }}
+                >
+                  <span
+                    style={{
+                      flexShrink: 0,
+                      width: 30, height: 30, borderRadius: 8,
+                      background: 'var(--navy)', color: '#fff',
+                      display: 'grid', placeItems: 'center',
+                      fontSize: 13, fontWeight: 700,
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+                  <div>
+                    <div style={{ fontSize: 16, fontWeight: 600, color: 'var(--ink)', marginBottom: 4 }}>{item.k}</div>
+                    <div className="muted" style={{ fontSize: 14.5, lineHeight: 1.7 }}>{item.v}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p style={{ fontSize: 17, lineHeight: 1.85, color: 'var(--ink-2)', marginTop: 8 }}>
+              这些判断，不是从 PPT 里学来的，是在 35 家奔驰经销商、200 多个雷克萨斯指标、
+              1000 多次门店沟通里磨出来的。
+            </p>
+          </div>
         </div>
       </section>
 

@@ -1,4 +1,5 @@
 export type CaseMetric = { label: string; value: string };
+export type CoverVariant = 'dashboard' | 'flow' | 'recommend';
 
 export type CaseItem = {
   slug: string;
@@ -14,6 +15,8 @@ export type CaseItem = {
   metrics: CaseMetric[];  // 3 key result data
   category: string;
   year: string;
+  cover: CoverVariant;    // cover visual variant
+  coverLabel: string;     // cover caption
 };
 
 export const cases: CaseItem[] = [
@@ -44,6 +47,8 @@ export const cases: CaseItem[] = [
     ],
     category: 'AI 落地',
     year: '2025',
+    cover: 'recommend',
+    coverLabel: 'AI Course Recommendation',
   },
   {
     slug: 'operation-diagnosis',
@@ -72,6 +77,8 @@ export const cases: CaseItem[] = [
     ],
     category: 'AI 落地',
     year: '2024',
+    cover: 'flow',
+    coverLabel: 'Operation Diagnosis System',
   },
   {
     slug: 'lexus-dashboard',
@@ -100,6 +107,8 @@ export const cases: CaseItem[] = [
     ],
     category: '数字化',
     year: '2024',
+    cover: 'dashboard',
+    coverLabel: 'Dealer Operations Dashboard',
   },
 ];
 

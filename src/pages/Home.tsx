@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import SectionHeader from '../components/SectionHeader';
+import CaseCover from '../components/CaseCover';
 import { cases } from '../data/cases';
 import { articles } from '../data/articles';
 
@@ -33,33 +34,41 @@ const TRUST = [
   { value: '7', suffix: '年', label: '安永咨询经验' },
 ];
 
+const BRANDS = ['奔驰', '雷克萨斯', '英菲尼迪', 'EY', '易车'];
+
 export default function Home() {
   return (
     <>
       {/* ===== Section 1: Hero ===== */}
-      <section className="section" style={{ paddingTop: 'clamp(48px, 7vw, 88px)' }}>
+      <section
+        className="section hero-section"
+        style={{
+          paddingTop: 'clamp(40px, 6vw, 80px)',
+          paddingBottom: 'clamp(48px, 7vw, 88px)',
+        }}
+      >
         <div className="container">
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1.15fr 0.85fr',
-              gap: 'clamp(32px, 5vw, 72px)',
-              alignItems: 'center',
-            }}
-            className="hero-grid"
-          >
-            <div className="fade-in">
+          <div className="hero-grid">
+            {/* Left */}
+            <div className="hero-left fade-in">
               <span className="eyebrow">运营数字化 × AI 落地 · 汽车行业 19 年</span>
-              <h1 className="h1" style={{ margin: '18px 0 22px' }}>
+              <h1 className="h-display" style={{ margin: '20px 0 22px' }}>
                 我在做企业运营体系的
                 <br />
                 <span style={{ color: 'var(--navy)' }}>数字化与 AI 落地</span>
               </h1>
-              <p className="lead" style={{ fontSize: 17, maxWidth: '52ch' }}>
-                19 年汽车行业经验，从经销商运营、培训体系、客户体验、数字化项目，到今天的 AI 落地实践。
-                主要在汽车行业，把复杂流程变得更清楚、更可执行。
+
+              <p className="brand-line" style={{ marginBottom: 26, maxWidth: '40ch' }}>
+                先把业务流程理清，
+                <br />
+                再谈 AI。
               </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, marginTop: 30 }}>
+
+              <p className="lead" style={{ fontSize: 16, maxWidth: '50ch', marginBottom: 30 }}>
+                19 年汽车行业经验，从经销商运营、培训体系、客户体验、数字化项目，到今天的 AI 落地实践。
+              </p>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14 }}>
                 <Button to="/about" variant="primary" size="lg">
                   了解我的方法
                 </Button>
@@ -69,63 +78,106 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="fade-in fade-in--d1">
-              <div
-                style={{
-                  position: 'relative',
-                  borderRadius: 'var(--radius-lg)',
-                  overflow: 'hidden',
-                  background: 'linear-gradient(180deg, #EEF2F7, #DDE4ED)',
-                  aspectRatio: '4 / 5',
-                  border: '1px solid var(--line)',
-                }}
-              >
+            {/* Right — large hero portrait */}
+            <div className="hero-right fade-in fade-in--d1">
+              <div className="hero-portrait">
                 <img
                   src={`${import.meta.env.BASE_URL}profile.png`}
                   alt="麻明"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   loading="eager"
                 />
-              </div>
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                  gap: 12,
-                  marginTop: 18,
-                }}
-              >
-                {TRUST.map((t) => (
-                  <div
-                    key={t.label}
-                    style={{
-                      background: '#fff',
-                      border: '1px solid var(--line)',
-                      borderRadius: 'var(--radius)',
-                      padding: '16px 18px',
-                    }}
-                  >
-                    <div className="metric-num">
-                      {t.value}
-                      <span style={{ fontSize: 18, marginLeft: 2 }}>{t.suffix}</span>
-                    </div>
-                    <div className="metric-label">{t.label}</div>
-                  </div>
-                ))}
+                <div className="hero-portrait__overlay" />
               </div>
             </div>
           </div>
 
-          <style>{`
-            @media (max-width: 880px) {
-              .hero-grid { grid-template-columns: 1fr !important; }
-            }
-          `}</style>
+          {/* Trust strip */}
+          <div className="hero-trust">
+            {TRUST.map((t) => (
+              <div key={t.label} className="hero-trust__item">
+                <div className="metric-num">
+                  {t.value}
+                  <span style={{ fontSize: 18, marginLeft: 2 }}>{t.suffix}</span>
+                </div>
+                <div className="metric-label">{t.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <style>{`
+          .hero-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: clamp(32px, 5vw, 72px);
+            align-items: center;
+          }
+          .hero-portrait {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: linear-gradient(180deg, #EEF2F7, #DDE4ED);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-lg);
+          }
+          .hero-portrait__overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(15,42,68,0.18));
+            pointer-events: none;
+          }
+          .hero-trust {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: clamp(36px, 5vw, 56px);
+          }
+          .hero-trust__item {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 20px 22px;
+            transition: transform .2s ease, box-shadow .2s ease;
+          }
+          .hero-trust__item:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+          @media (max-width: 880px) {
+            .hero-grid { grid-template-columns: 1fr !important; }
+            .hero-trust { grid-template-columns: repeat(2, 1fr) !important; }
+            .hero-portrait { aspect-ratio: 4 / 4 !important; max-width: 420px; }
+          }
+        `}</style>
+      </section>
+
+      {/* ===== Brand Wall ===== */}
+      <section className="section section--alt" style={{ padding: '48px 0' }}>
+        <div className="container">
+          <div
+            style={{
+              textAlign: 'center',
+              marginBottom: 32,
+              fontSize: 12,
+              fontWeight: 600,
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              color: 'var(--muted)',
+            }}
+          >
+            服务过的品牌
+          </div>
+          <div className="brand-wall" style={{ justifyContent: 'center' }}>
+            {BRANDS.map((b) => (
+              <span key={b} className={`brand-item${/^[A-Za-z]/.test(b) ? ' brand-item--en' : ''}`}>
+                {b}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ===== Section 2: 我解决的问题 ===== */}
-      <section className="section section--alt">
+      <section className="section">
         <div className="container">
           <SectionHeader
             eyebrow="PROBLEMS"
@@ -137,16 +189,9 @@ export default function Home() {
               <Card key={p.title} className={`fade-in fade-in--d${i + 1}`}>
                 <div
                   style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 8,
-                    background: 'rgba(37, 99, 235, 0.08)',
-                    color: 'var(--accent)',
-                    display: 'grid',
-                    placeItems: 'center',
-                    fontWeight: 700,
-                    marginBottom: 18,
-                    fontSize: 14,
+                    width: 36, height: 36, borderRadius: 8,
+                    background: 'rgba(37, 99, 235, 0.08)', color: 'var(--accent)',
+                    display: 'grid', placeItems: 'center', fontWeight: 700, marginBottom: 18, fontSize: 14,
                   }}
                 >
                   {String(i + 1).padStart(2, '0')}
@@ -160,49 +205,36 @@ export default function Home() {
       </section>
 
       {/* ===== Section 3: 我的方法 ===== */}
-      <section className="section">
+      <section className="section section--alt">
         <div className="container">
           <SectionHeader
             eyebrow="METHOD"
             title="我的方法"
             lead="不是工具介绍，而是一套咨询方法论：先理流程，再建系统，最后才是 AI。"
           />
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 0,
-              borderTop: '1px solid var(--line)',
-            }}
-            className="method-grid"
-          >
+          <div className="method-grid">
             {METHOD.map((m) => (
-              <div
-                key={m.no}
-                style={{
-                  padding: '36px 28px',
-                  borderRight: '1px solid var(--line)',
-                  borderBottom: '1px solid var(--line)',
-                }}
-                className="method-cell"
-              >
-                <div
-                  style={{
-                    fontSize: 13,
-                    fontWeight: 600,
-                    letterSpacing: '0.18em',
-                    color: 'var(--accent)',
-                    marginBottom: 18,
-                  }}
-                >
-                  {m.no}
-                </div>
+              <div key={m.no} className="method-cell">
+                <div className="method-no">{m.no}</div>
                 <h3 className="h3" style={{ marginBottom: 10 }}>{m.title}</h3>
                 <p className="muted" style={{ lineHeight: 1.75 }}>{m.desc}</p>
               </div>
             ))}
           </div>
           <style>{`
+            .method-grid {
+              display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+              border-top: 1px solid var(--line);
+            }
+            .method-cell {
+              padding: 36px 28px;
+              border-right: 1px solid var(--line);
+              border-bottom: 1px solid var(--line);
+            }
+            .method-no {
+              font-size: 13px; font-weight: 600; letter-spacing: 0.18em;
+              color: var(--accent); margin-bottom: 18px;
+            }
             @media (max-width: 880px) {
               .method-grid { grid-template-columns: 1fr !important; }
               .method-cell { border-right: none !important; }
@@ -212,7 +244,7 @@ export default function Home() {
       </section>
 
       {/* ===== Section 4: 代表案例 ===== */}
-      <section className="section section--alt">
+      <section className="section">
         <div className="container">
           <SectionHeader
             eyebrow="CASES"
@@ -221,38 +253,40 @@ export default function Home() {
           />
           <div className="grid grid-3">
             {cases.map((c, i) => (
-              <Card key={c.slug} className={`fade-in fade-in--d${i + 1}`} flat>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
-                  {c.tags.slice(0, 2).map((t) => (
-                    <span key={t} className="tag tag--blue">{t}</span>
-                  ))}
-                </div>
-                <h3 className="h3" style={{ marginBottom: 10, minHeight: '2.4em' }}>{c.name}</h3>
-                <p className="muted" style={{ minHeight: '4.2em', lineHeight: 1.7, marginBottom: 22 }}>
-                  {c.summary}
-                </p>
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: 8,
-                    borderTop: '1px solid var(--line)',
-                    paddingTop: 18,
-                    marginBottom: 22,
-                  }}
-                >
-                  {c.metrics.map((m) => (
-                    <div key={m.label}>
-                      <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--navy)', lineHeight: 1.2 }}>
-                        {m.value}
+              <Card key={c.slug} flat className={`card--cover fade-in fade-in--d${i + 1}`}>
+                <CaseCover variant={c.cover} label={c.coverLabel} />
+                <div className="card-body">
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
+                    {c.tags.slice(0, 2).map((t) => (
+                      <span key={t} className="tag tag--blue">{t}</span>
+                    ))}
+                  </div>
+                  <h3 className="h3" style={{ marginBottom: 8, fontSize: 19 }}>{c.name}</h3>
+                  <p className="muted" style={{ fontSize: 14, lineHeight: 1.65, marginBottom: 20 }}>
+                    {c.summary}
+                  </p>
+                  <div className="card-metrics">
+                    {c.metrics.map((m) => (
+                      <div key={m.label}>
+                        <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--navy)' }}>{m.value}</div>
+                        <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 3 }}>{m.label}</div>
                       </div>
-                      <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 4 }}>{m.label}</div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                  <Link
+                    to={`/cases/${c.slug}`}
+                    className="link"
+                    style={{ color: 'var(--accent)', fontWeight: 500, fontSize: 14, marginTop: 18, display: 'inline-flex', alignItems: 'center', gap: 6 }}
+                  >
+                    查看详情 <span className="arrow">→</span>
+                  </Link>
                 </div>
-                <Link to={`/cases/${c.slug}`} className="btn--link link" style={{ color: 'var(--accent)', fontWeight: 500, fontSize: 14 }}>
-                  查看详情 <span className="arrow">→</span>
-                </Link>
+                <style>{`
+                  .card-metrics {
+                    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8;
+                    border-top: 1px solid var(--line); padding-top: 16px;
+                  }
+                `}</style>
               </Card>
             ))}
           </div>
@@ -263,7 +297,7 @@ export default function Home() {
       </section>
 
       {/* ===== Section 5: 思考与洞察 ===== */}
-      <section className="section">
+      <section className="section section--alt">
         <div className="container">
           <SectionHeader
             eyebrow="THINKING"
@@ -272,28 +306,18 @@ export default function Home() {
           />
           <div className="grid grid-3">
             {articles.slice(0, 3).map((a, i) => (
-              <Card key={a.slug} className={`fade-in fade-in--d${i + 1}`} flat>
+              <Card key={a.slug} flat className={`fade-in fade-in--d${i + 1}`}>
                 <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
                   <span className="tag">{a.category}</span>
                 </div>
-                <h3 className="h3" style={{ marginBottom: 10, minHeight: '2.4em', fontSize: 20 }}>
+                <h3 style={{ fontSize: 19, fontWeight: 600, color: 'var(--ink)', marginBottom: 10, lineHeight: 1.4, letterSpacing: '-0.01em' }}>
                   {a.title}
                 </h3>
-                <p className="muted" style={{ minHeight: '4.2em', lineHeight: 1.7, marginBottom: 22 }}>
+                <p className="muted" style={{ lineHeight: 1.7, marginBottom: 22, fontSize: 14 }}>
                   {a.excerpt}
                 </p>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    borderTop: '1px solid var(--line)',
-                    paddingTop: 16,
-                  }}
-                >
-                  <span style={{ fontSize: 12, color: 'var(--muted)' }}>
-                    {a.date} · {a.readTime}
-                  </span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--line)', paddingTop: 16 }}>
+                  <span style={{ fontSize: 12, color: 'var(--muted)' }}>{a.date} · {a.readTime}</span>
                   <Link to="/thinking" className="link" style={{ color: 'var(--accent)', fontSize: 14 }}>
                     阅读 <span className="arrow">→</span>
                   </Link>
@@ -308,27 +332,26 @@ export default function Home() {
       </section>
 
       {/* ===== Section 6: CTA ===== */}
-      <section className="section section--alt">
+      <section className="section">
         <div className="container">
-          <div
-            style={{
-              background: 'var(--navy)',
-              borderRadius: 'var(--radius-lg)',
-              padding: 'clamp(36px, 5vw, 64px)',
-              color: '#fff',
-              textAlign: 'center',
-            }}
-          >
-            <h2 className="h2" style={{ color: '#fff', marginBottom: 18, maxWidth: '20ch', margin: '0 auto 18px' }}>
+          <div className="cta-block">
+            <h2 className="h2" style={{ color: '#fff', marginBottom: 18, maxWidth: '22ch', margin: '0 auto 18px' }}>
               如果你正在做数字化项目、AI 项目、培训体系升级或经销商运营优化，欢迎聊聊。
             </h2>
-            <p style={{ color: 'rgba(255,255,255,0.78)', marginBottom: 28, maxWidth: '56ch', margin: '0 auto 28px' }}>
+            <p style={{ color: 'rgba(255,255,255,0.78)', marginBottom: 28, maxWidth: '52ch', margin: '0 auto 28px' }}>
               一次 30 分钟的对话，足够判断我能为你的业务带来什么。
             </p>
-            <Button to="/contact" variant="accent" size="lg">
-              联系我
-            </Button>
+            <Button to="/contact" variant="accent" size="lg">联系我</Button>
           </div>
+          <style>{`
+            .cta-block {
+              background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+              border-radius: var(--radius-lg);
+              padding: clamp(40px, 6vw, 72px);
+              color: #fff; text-align: center;
+              box-shadow: var(--shadow-lg);
+            }
+          `}</style>
         </div>
       </section>
     </>

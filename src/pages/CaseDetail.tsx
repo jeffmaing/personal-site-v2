@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import Button from '../components/Button';
+import CaseCover from '../components/CaseCover';
 import { getCaseBySlug } from '../data/cases';
 
 export default function CaseDetail() {
@@ -19,9 +20,27 @@ export default function CaseDetail() {
 
   return (
     <article>
+      {/* Cover image */}
+      <div style={{ width: '100%', maxWidth: 1200, margin: '0 auto', padding: '0 var(--gutter)' }}>
+        <div
+          className="detail-cover-wrap"
+          style={{ marginTop: 24 }}
+        >
+          <CaseCover variant={c.cover} label={c.coverLabel} />
+        </div>
+        <style>{`
+          .detail-cover-wrap {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+          }
+          .detail-cover-wrap .case-cover { aspect-ratio: 21 / 9; }
+        `}</style>
+      </div>
+
       {/* Header */}
-      <section className="section" style={{ paddingBottom: 'clamp(40px, 6vw, 64px)' }}>
-        <div className="container">
+      <section className="section" style={{ paddingTop: 'clamp(40px, 6vw, 64px)', paddingBottom: 'clamp(32px, 5vw, 48px)' }}>
+        <div className="container" style={{ maxWidth: 820 }}>
           <Link
             to="/cases"
             className="link"
@@ -38,7 +57,7 @@ export default function CaseDetail() {
             <span className="tag">{c.year}</span>
           </div>
 
-          <h1 className="h1" style={{ marginBottom: 18, fontSize: 'clamp(28px, 4vw, 44px)' }}>
+          <h1 className="h1" style={{ marginBottom: 18, fontSize: 'clamp(30px, 4.4vw, 48px)' }}>
             {c.name}
           </h1>
           <p className="lead" style={{ fontSize: 17 }}>{c.summary}</p>
