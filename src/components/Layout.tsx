@@ -182,11 +182,26 @@ function Footer() {
 }
 
 export default function Layout({ children }: { children?: ReactNode }) {
+  const location = useLocation();
   return (
     <>
       <NavBar />
-      <main>{children ?? <Outlet />}</main>
+      <main>
+        <div key={location.pathname} className="route-fade">
+          {children ?? <Outlet />}
+        </div>
+      </main>
       <Footer />
+      <style>{`
+        @keyframes routeFade {
+          from { opacity: 0; transform: translateY(6px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .route-fade { animation: routeFade 0.32s ease both; }
+        @media (prefers-reduced-motion: reduce) {
+          .route-fade { animation: none; }
+        }
+      `}</style>
     </>
   );
 }
