@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useInView, useWidth } from '../hooks/useAnimatedNumber'
+import Modal from './Modal'
 
 interface MetricItem {
   label: string
@@ -94,6 +95,272 @@ const CAREER_DATA: CareerStep[] = [
   },
 ]
 
+export default function CareerTimeline() {
+  const [ref, visible] = useInView(0.05)
+  const [selectedCareer, setSelectedCareer] = useState<CareerStep | null>(null)
+  const w = useWidth()
+  const isMobile = w < 768
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'none' : 'translateY(20px)',
+        transition: 'opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s',
+      }}
+    >
+      {/* Section label */}
+      <div className="section-label" style={{ marginBottom: isMobile ? '24px' : '32px' }}>
+        职业历程
+      </div>
+
+      {/* Static timeline — clean vertical list */}
+      <div style={{
+        position: 'relative',
+        paddingLeft: isMobile ? '0' : '28px',
+      }}>
+        {/* Vertical timeline line (desktop) */}
+        {!isMobile && (
+          <div style={{
+            position: 'absolute',
+            left: '7px',
+            top: '12px',
+            bottom: '12px',
+            width: '2px',
+            background: 'var(--border-subtle)',
+          }} />
+        )}
+
+        {CAREER_DATA.map((step, i) => (
+          <div
+            key={i}
+            style={{
+              position: 'relative',
+              marginBottom: '16px',
+              paddingLeft: isMobile ? '0' : '32px',
+              opacity: visible ? 1 : 0,
+              transform: visible ? 'none' : 'translateY(12px)',
+              transition: `opacity 0.5s ease, transform 0.5s ease`,
+              transitionDelay: `${0.1 + i * 0.08}s`,
+            }}
+          >
+            {/* Timeline dot (desktop) */}
+            {!isMobile && (
+              <div style={{
+                position: 'absolute',
+                left: '0',
+                top: '24px',
+                width: '16px',
+                height: '16px',
+                borderRadius: '50%',
+                border: `3px solid ${step.color}`,
+                background: 'var(--bg-primary)',
+                zIndex: 1,
+              }} />
+            )}
+
+            {/* Card */}
+            <div
+              style={{
+                background: 'var(--bg-card)',
+                borderRadius: 'var(--radius-lg)',
+                padding: '20px 24px',
+                border: '1px solid var(--border-subtle)',
+                boxShadow: 'var(--shadow-sm)',
+                cursor: 'pointer',
+                transition: 'box-shadow 0.2s ease',
+              }}
+              onClick={() => setSelectedCareer(step)}
+              onMouseEnter={e => { e.currentTarget.style.boxShadow = 'var(--shadow-md)' }}
+              onMouseLeave={e => { e.currentTarget.style.boxShadow = 'var(--shadow-sm)' }}
+            >
+              {/* Header row */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'space-between',
+                marginBottom: '12px',
+                flexWrap: 'wrap',
+                gap: '8px',
+              }}>
+                <div>
+                  {/* Year badge */}
+                  <div style={{
+                    display: 'inline-block',
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    color: step.color,
+                    background: `${step.color}12`,
+                    padding: '3px 8px',
+                    borderRadius: 'var(--radius-md)',
+                    marginBottom: '6px',
+                    fontFamily: 'var(--font-heading)',
+                  }}>
+                    {step.year}
+                  </div>
+
+                  {/* Company + Role */}
+                  <div style={{
+                    fontSize: '17px',
+                    fontWeight: 600,
+                    color: 'var(--text-primary)',
+                    marginBottom: '2px',
+                    fontFamily: 'var(--font-heading)',
+                  }}>
+                    {step.label}
+                  </div>
+                  <div style={{
+                    fontSize: '13px',
+                    color: step.color,
+                    fontWeight: 500,
+                    fontFamily: 'var(--font-body)',
+                  }}>
+                    {step.role}
+                  </div>
+                </div>
+
+                {/* View detail hint (desktop) */}
+                {!isMobile && (
+                  <div style={{
+                    fontSize: '11px',
+                    color: 'var(--text-light)',
+                    marginTop: '4px',
+                    whiteSpace: 'nowrap',
+                    fontFamily: 'var(--font-body)',
+                  }}>
+                    点击查看详情 →
+                  </div>
+                )}
+              </div>
+
+              {/* Description */}
+              <div style={{
+                fontSize: '14px',
+                lineHeight: 1.75,
+                color: 'var(--text-secondary)',
+                marginBottom: '14px',
+                fontFamily: 'var(--font-body)',
+              }}>
+                {step.description}
+              </div>
+
+              {/* Metrics */}
+              <div style={{ marginBottom: '14px' }}>
+                <div style={{
+                  fontSize: '11px',
+                  color: 'var(--text-light)',
+                  letterSpacing: '0.08em',
+                  marginBottom: '8px',
+                  fontWeight: 600,
+                  fontFamily: 'var(--font-heading)',
+                }}>
+                  量化成果
+                </div>
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                }}>
+                  {step.metrics.map((metric, mi) => (
+                    <div
+                      key={mi}
+                      style={{
+                        background: 'var(--bg-primary)',
+                        borderRadius: 'var(--radius-md)',
+                        padding: '10px 14px',
+                        border: '1px solid var(--border-subtle)',
+                        minWidth: '110px',
+                        flex: '1 1 130px',
+                      }}
+                    >
+                      <div style={{
+                        fontSize: '11px',
+                        color: 'var(--text-muted)',
+                        marginBottom: '3px',
+                        fontFamily: 'var(--font-body)',
+                      }}>
+                        {metric.label}
+                      </div>
+                      <div style={{
+                        fontSize: '18px',
+                        fontWeight: 700,
+                        color: step.color,
+                        marginBottom: '2px',
+                        fontFamily: 'var(--font-heading)',
+                      }}>
+                        {metric.value}
+                      </div>
+                      <div style={{
+                        fontSize: '11px',
+                        color: 'var(--text-light)',
+                        lineHeight: 1.4,
+                        fontFamily: 'var(--font-body)',
+                      }}>
+                        {metric.detail}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Projects */}
+              <div>
+                <div style={{
+                  fontSize: '11px',
+                  color: 'var(--text-light)',
+                  letterSpacing: '0.08em',
+                  marginBottom: '8px',
+                  fontWeight: 600,
+                  fontFamily: 'var(--font-heading)',
+                }}>
+                  代表项目
+                </div>
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '6px',
+                }}>
+                  {step.projects.map((project, pi) => (
+                    <span
+                      key={pi}
+                      style={{
+                        display: 'inline-block',
+                        background: `${step.color}10`,
+                        color: step.color,
+                        padding: '5px 12px',
+                        borderRadius: 'var(--radius-md)',
+                        fontSize: '12px',
+                        fontWeight: 500,
+                        border: `1px solid ${step.color}20`,
+                        fontFamily: 'var(--font-body)',
+                      }}
+                    >
+                      {project}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Modal */}
+      {selectedCareer && (
+        <Modal onClose={() => setSelectedCareer(null)}>
+          <CareerModal
+            data={selectedCareer}
+            onClose={() => setSelectedCareer(null)}
+          />
+        </Modal>
+      )}
+    </div>
+  )
+}
+
+// ============ MODAL ============
+
 function CareerModal({ data, onClose }: { data: CareerStep; onClose: () => void }) {
   const w = useWidth()
   const isMobile = w < 768
@@ -126,16 +393,15 @@ function CareerModal({ data, onClose }: { data: CareerStep; onClose: () => void 
           maxHeight: isMobile ? '90vh' : '85vh',
           height: isMobile ? '90vh' : 'auto',
           overflow: 'auto',
-          background: '#ffffff',
-          borderRadius: isMobile ? '24px 24px 0 0' : '20px',
-          border: isMobile ? 'none' : '1px solid rgba(0,0,0,0.06)',
+          background: 'var(--bg-card)',
+          borderRadius: isMobile ? 'var(--radius-xl) var(--radius-xl) 0 0' : 'var(--radius-xl)',
+          border: isMobile ? 'none' : '1px solid var(--border-subtle)',
           padding: isMobile ? '24px 20px 32px' : 'clamp(28px, 4vw, 48px)',
-          boxShadow: '0 24px 80px rgba(0,0,0,0.15)',
+          boxShadow: 'var(--shadow-lg)',
           animation: isMobile ? 'modalSlideUp 0.4s ease' : 'modalSlideIn 0.4s ease',
           position: 'relative',
         }}
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           aria-label="关闭"
@@ -143,43 +409,44 @@ function CareerModal({ data, onClose }: { data: CareerStep; onClose: () => void 
             position: 'absolute',
             top: isMobile ? '16px' : '20px',
             right: isMobile ? '16px' : '20px',
-            width: '36px',
-            height: '36px',
+            width: '32px',
+            height: '32px',
             borderRadius: '50%',
-            border: '1px solid rgba(0,0,0,0.1)',
-            background: '#f8f9fa',
+            border: '1px solid var(--border-subtle)',
+            background: 'var(--bg-primary)',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '16px',
-            color: '#666',
-            transition: 'all 0.3s ease',
+            fontSize: '14px',
+            color: 'var(--text-secondary)',
+            transition: 'all 0.2s ease',
             zIndex: 10,
           }}
         >
           ✕
         </button>
 
-        {/* Header */}
         <div style={{ marginBottom: '24px', paddingRight: '40px' }}>
           <div style={{
             display: 'inline-block',
             fontSize: '13px',
-            fontWeight: 700,
+            fontWeight: 600,
             color: data.color,
             background: `${data.color}15`,
-            padding: '6px 14px',
-            borderRadius: '8px',
-            marginBottom: '12px',
+            padding: '4px 12px',
+            borderRadius: 'var(--radius-md)',
+            marginBottom: '10px',
+            fontFamily: 'var(--font-heading)',
           }}>
             {data.year}
           </div>
           <h3 style={{
             fontSize: isMobile ? '22px' : '26px',
-            fontWeight: 700,
-            color: '#1e2a3a',
+            fontWeight: 600,
+            color: 'var(--text-primary)',
             margin: '0 0 6px 0',
+            fontFamily: 'var(--font-heading)',
           }}>
             {data.label}
           </h3>
@@ -187,40 +454,42 @@ function CareerModal({ data, onClose }: { data: CareerStep; onClose: () => void 
             fontSize: '15px',
             color: data.color,
             fontWeight: 500,
+            fontFamily: 'var(--font-body)',
           }}>
             {data.role}
           </div>
         </div>
 
-        {/* Description */}
         <div style={{ marginBottom: '28px' }}>
           <div style={{
             fontSize: '12px',
-            color: '#999',
+            color: 'var(--text-muted)',
             letterSpacing: '0.08em',
             marginBottom: '10px',
             fontWeight: 600,
+            fontFamily: 'var(--font-heading)',
           }}>
             职责描述
           </div>
           <p style={{
             fontSize: '15px',
             lineHeight: 1.8,
-            color: '#444',
+            color: 'var(--text-secondary)',
             margin: 0,
+            fontFamily: 'var(--font-body)',
           }}>
             {data.description}
           </p>
         </div>
 
-        {/* Metrics */}
         <div style={{ marginBottom: '28px' }}>
           <div style={{
             fontSize: '12px',
-            color: '#999',
+            color: 'var(--text-muted)',
             letterSpacing: '0.08em',
             marginBottom: '14px',
             fontWeight: 600,
+            fontFamily: 'var(--font-heading)',
           }}>
             量化成果
           </div>
@@ -233,32 +502,35 @@ function CareerModal({ data, onClose }: { data: CareerStep; onClose: () => void 
               <div
                 key={i}
                 style={{
-                  background: 'linear-gradient(135deg, #f8f9fa 0%, #fff 100%)',
-                  borderRadius: '14px',
-                  padding: '18px 16px',
-                  border: '1px solid rgba(0,0,0,0.04)',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
+                  background: 'var(--bg-primary)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '16px',
+                  border: '1px solid var(--border-subtle)',
+                  boxShadow: 'var(--shadow-sm)',
                 }}
               >
                 <div style={{
                   fontSize: '11px',
-                  color: '#888',
-                  marginBottom: '6px',
+                  color: 'var(--text-muted)',
+                  marginBottom: '4px',
+                  fontFamily: 'var(--font-body)',
                 }}>
                   {metric.label}
                 </div>
                 <div style={{
-                  fontSize: '22px',
+                  fontSize: '20px',
                   fontWeight: 700,
                   color: data.color,
-                  marginBottom: '4px',
+                  marginBottom: '3px',
+                  fontFamily: 'var(--font-heading)',
                 }}>
                   {metric.value}
                 </div>
                 <div style={{
                   fontSize: '12px',
-                  color: '#999',
+                  color: 'var(--text-muted)',
                   lineHeight: 1.4,
+                  fontFamily: 'var(--font-body)',
                 }}>
                   {metric.detail}
                 </div>
@@ -267,21 +539,21 @@ function CareerModal({ data, onClose }: { data: CareerStep; onClose: () => void 
           </div>
         </div>
 
-        {/* Projects */}
         <div>
           <div style={{
             fontSize: '12px',
-            color: '#999',
+            color: 'var(--text-muted)',
             letterSpacing: '0.08em',
             marginBottom: '14px',
             fontWeight: 600,
+            fontFamily: 'var(--font-heading)',
           }}>
             代表项目
           </div>
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: '10px',
+            gap: '8px',
           }}>
             {data.projects.map((project, i) => (
               <span
@@ -290,11 +562,12 @@ function CareerModal({ data, onClose }: { data: CareerStep; onClose: () => void 
                   display: 'inline-block',
                   background: `${data.color}10`,
                   color: data.color,
-                  padding: '10px 16px',
-                  borderRadius: '10px',
+                  padding: '8px 14px',
+                  borderRadius: 'var(--radius-md)',
                   fontSize: '13px',
                   fontWeight: 500,
                   border: `1px solid ${data.color}20`,
+                  fontFamily: 'var(--font-body)',
                 }}
               >
                 {project}
@@ -319,118 +592,5 @@ function CareerModal({ data, onClose }: { data: CareerStep; onClose: () => void 
         }
       `}</style>
     </div>
-  )
-}
-
-export default function CareerTimeline() {
-  const [ref, visible] = useInView(0.1)
-  const [selectedCareer, setSelectedCareer] = useState<CareerStep | null>(null)
-  const w = useWidth()
-  const isMobile = w < 768
-
-  return (
-    <>
-      <div
-        ref={ref}
-        style={{
-          opacity: visible ? 1 : 0,
-          transform: visible ? 'none' : 'translateY(20px)',
-          transition: 'opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s',
-        }}
-      >
-        {/* Section label */}
-        <div style={{
-          fontSize: '11px',
-          color: '#bbb',
-          letterSpacing: '0.2em',
-          marginBottom: isMobile ? '24px' : '32px',
-        }}>
-          职业历程
-        </div>
-
-        {/* Milestone cards grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-          gap: '16px',
-        }}>
-          {CAREER_DATA.map((step, i) => (
-            <div
-              key={i}
-              onClick={() => setSelectedCareer(step)}
-              style={{
-                background: '#fff',
-                borderRadius: '14px',
-                padding: '20px 16px',
-                border: '1px solid rgba(0,0,0,0.04)',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
-                opacity: visible ? 1 : 0,
-                transform: visible ? 'none' : 'translateY(12px)',
-                transition: 'opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, border-color 0.3s ease',
-                transitionDelay: `${0.1 + i * 0.08}s`,
-                cursor: 'pointer',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)'
-                e.currentTarget.style.borderColor = step.color + '30'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.03)'
-                e.currentTarget.style.borderColor = 'rgba(0,0,0,0.04)'
-              }}
-            >
-              {/* Year badge */}
-              <div style={{
-                display: 'inline-block',
-                fontSize: '12px',
-                fontWeight: 700,
-                color: step.color,
-                background: `${step.color}12`,
-                padding: '4px 10px',
-                borderRadius: '6px',
-                marginBottom: '10px',
-              }}>
-                {step.year}
-              </div>
-
-              {/* Company */}
-              <div style={{
-                fontSize: '16px',
-                fontWeight: 700,
-                color: '#1e2a3a',
-                marginBottom: '4px',
-              }}>
-                {step.label}
-              </div>
-
-              {/* Role */}
-              <div style={{
-                fontSize: '12px',
-                color: '#999',
-                letterSpacing: '0.02em',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-                <span>{step.role}</span>
-                <span style={{
-                  fontSize: '10px',
-                  color: '#bbb',
-                  marginLeft: '8px',
-                }}>查看详情 →</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Modal */}
-      {selectedCareer && (
-        <CareerModal
-          data={selectedCareer}
-          onClose={() => setSelectedCareer(null)}
-        />
-      )}
-    </>
   )
 }
