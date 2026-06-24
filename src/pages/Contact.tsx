@@ -9,11 +9,20 @@ const CONTACT = [
   { label: '微信 / LinkedIn', value: '沟通时提供' },
 ];
 
+const EMAIL = 'jeffmaming@163.com';
+
 export default function Contact() {
   const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ name: '', company: '', contact: '', message: '' });
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // 构造邮件内容，通过 mailto 唤起邮件客户端（无后端依赖）
+    const subject = encodeURIComponent(`网站咨询 · ${form.name || '潜在客户'}${form.company ? ' · ' + form.company : ''}`);
+    const body = encodeURIComponent(
+      `姓名：${form.name}\n公司：${form.company}\n联系方式：${form.contact}\n\n想聊的内容：\n${form.message}`
+    );
+    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
     setSent(true);
   };
 
@@ -119,9 +128,9 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-                <Field label="姓名" name="name" placeholder="你的称呼" required />
-                <Field label="公司" name="company" placeholder="所在公司或组织" />
-                <Field label="邮箱 / 电话" name="contact" placeholder="方便联系到你的方式" required />
+                <Field label="姓名" name="name" placeholder="你的称呼" required value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
+                <Field label="公司" name="company" placeholder="所在公司或组织" value={form.company} onChange={(v) => setForm({ ...form, company: v })} />
+                <Field label="邮箱 / 电话" name="contact" placeholder="方便联系到你的方式" required value={form.contact} onChange={(v) => setForm({ ...form, contact: v })} />
                 <div>
                   <label
                     style={{
@@ -139,6 +148,8 @@ export default function Contact() {
                     placeholder="简单描述你的需求或问题"
                     rows={4}
                     required
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
                     style={{
                       width: '100%',
                       border: '1px solid var(--line)',
@@ -161,6 +172,9 @@ export default function Contact() {
                 >
                   发送消息
                 </button>
+                <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: -6 }}>
+                  提交后会唤起邮件客户端预填内容，发送至 {EMAIL}。
+                </p>
               </form>
             )}
           </div>
@@ -182,11 +196,15 @@ function Field({
   name,
   placeholder,
   required,
+  value,
+  onChange,
 }: {
   label: string;
   name: string;
   placeholder: string;
   required?: boolean;
+  value: string;
+  onChange: (v: string) => void;
 }) {
   return (
     <div>
@@ -206,6 +224,8 @@ function Field({
         name={name}
         placeholder={placeholder}
         required={required}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
         style={{
           width: '100%',
           border: '1px solid var(--line)',
