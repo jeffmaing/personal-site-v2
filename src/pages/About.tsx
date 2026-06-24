@@ -93,8 +93,11 @@ export default function About() {
               <img
                 src={`${import.meta.env.BASE_URL}profile.png`}
                 alt="麻明"
+                width={480}
+                height={600}
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 loading="lazy"
+                decoding="async"
               />
             </div>
           </div>

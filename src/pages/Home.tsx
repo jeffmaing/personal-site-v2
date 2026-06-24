@@ -99,8 +99,11 @@ export default function Home() {
                   <img
                     src={`${import.meta.env.BASE_URL}profile.png`}
                     alt="麻明"
+                    width={44}
+                    height={44}
                     style={{ width: 44, height: 44, borderRadius: 10, objectFit: 'cover', border: '1px solid var(--line)' }}
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
                   />
                   <div className="hero-founder__text">
                     <strong>麻明</strong>
