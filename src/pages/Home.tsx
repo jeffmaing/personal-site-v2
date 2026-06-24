@@ -4,6 +4,7 @@ import Card from '../components/Card';
 import SectionHeader from '../components/SectionHeader';
 import CaseCover from '../components/CaseCover';
 import HeroFlowDiagram from '../components/HeroFlowDiagram';
+import SEO from '../components/SEO';
 import { cases } from '../data/cases';
 import { articles } from '../data/articles';
 
@@ -40,6 +41,10 @@ const BRANDS = ['奔驰', '雷克萨斯', '英菲尼迪', 'EY', '易车'];
 export default function Home() {
   return (
     <>
+      <SEO
+        title="麻明 · 企业运营数字化 × AI 落地 | 汽车行业 19 年"
+        description="19 年汽车行业经验，专注经销商运营、培训体系、客户体验、数字化项目与 AI 落地。先把业务流程理清，再谈 AI。"
+      />
       {/* ===== Section 1: Hero ===== */}
       <section
         className="section hero-section"

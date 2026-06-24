@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SectionHeader from '../components/SectionHeader';
+import SEO from '../components/SEO';
 import { articles, categories } from '../data/articles';
 
 export default function Thinking() {
@@ -11,7 +12,13 @@ export default function Thinking() {
     : articles.filter((a) => a.category === active || a.tags.includes(active));
 
   return (
-    <section className="section">
+    <>
+      <SEO
+        title="思考与洞察 · 麻明"
+        description="关于汽车行业、数字化、AI 落地与运营系统的判断。先理流程，再谈 AI。"
+        path="thinking"
+      />
+      <section className="section">
       <div className="container">
         <SectionHeader
           eyebrow="THINKING"
@@ -98,5 +105,6 @@ export default function Thinking() {
         `}</style>
       </div>
     </section>
+    </>
   );
 }

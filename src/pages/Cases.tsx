@@ -2,11 +2,18 @@ import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import SectionHeader from '../components/SectionHeader';
 import CaseCover from '../components/CaseCover';
+import SEO from '../components/SEO';
 import { cases } from '../data/cases';
 
 export default function Cases() {
   return (
-    <section className="section">
+    <>
+      <SEO
+        title="代表案例 · 麻明"
+        description="AI 课程推荐、智能运营诊断、经销商数字化看板——每个案例说清问题、方法与结果。"
+        path="cases"
+      />
+      <section className="section">
       <div className="container">
         <SectionHeader
           eyebrow="CASES"
@@ -52,6 +59,7 @@ export default function Cases() {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

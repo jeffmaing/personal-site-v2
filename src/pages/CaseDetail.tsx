@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import Button from '../components/Button';
 import CaseCover from '../components/CaseCover';
+import SEO from '../components/SEO';
 import { getCaseBySlug } from '../data/cases';
 
 export default function CaseDetail() {
@@ -10,6 +11,7 @@ export default function CaseDetail() {
   if (!c) {
     return (
       <section className="section">
+        <SEO title="未找到案例 · 麻明" description="该案例不存在。" />
         <div className="container" style={{ textAlign: 'center' }}>
           <h1 className="h2" style={{ marginBottom: 16 }}>未找到该案例</h1>
           <Button to="/cases" variant="link">返回案例列表</Button>
@@ -20,6 +22,12 @@ export default function CaseDetail() {
 
   return (
     <article>
+      <SEO
+        title={`${c.name} · 案例详情 · 麻明`}
+        description={`${c.summary} ${c.result}`}
+        path={`cases/${c.slug}`}
+        type="article"
+      />
       {/* Cover image */}
       <div style={{ width: '100%', maxWidth: 1200, margin: '0 auto', padding: '0 var(--gutter)' }}>
         <div

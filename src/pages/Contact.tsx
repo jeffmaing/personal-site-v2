@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import SectionHeader from '../components/SectionHeader';
+import SEO from '../components/SEO';
 
 const CONTACT = [
   { label: '电话', value: '185-1359-5306', href: 'tel:+8618513595306' },
@@ -17,7 +18,13 @@ export default function Contact() {
   };
 
   return (
-    <section className="section">
+    <>
+      <SEO
+        title="联系 · 麻明"
+        description="AI 项目、数字化项目、培训体系升级、经销商运营优化——一次 30 分钟对话，判断我能为你带来什么。"
+        path="contact"
+      />
+      <section className="section">
       <div className="container">
         <SectionHeader
           eyebrow="CONTACT"
@@ -166,6 +173,7 @@ export default function Contact() {
         `}</style>
       </div>
     </section>
+    </>
   );
 }
 

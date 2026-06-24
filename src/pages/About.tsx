@@ -1,4 +1,5 @@
 import SectionHeader from '../components/SectionHeader';
+import SEO from '../components/SEO';
 
 const TIMELINE = [
   {
@@ -40,6 +41,11 @@ const FOCUS = [
 export default function About() {
   return (
     <>
+      <SEO
+        title="关于我 · 麻明"
+        description="19 年汽车行业，从奔驰、英菲尼迪、安永、易车到港泓咨询。我不是 AI 从业者出身，我来自汽车行业。"
+        path="about"
+      />
       {/* Intro + portrait */}
       <section className="section">
         <div className="container">
