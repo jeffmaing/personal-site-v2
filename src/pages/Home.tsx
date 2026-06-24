@@ -3,6 +3,7 @@ import Button from '../components/Button';
 import Card from '../components/Card';
 import SectionHeader from '../components/SectionHeader';
 import CaseCover from '../components/CaseCover';
+import HeroFlowDiagram from '../components/HeroFlowDiagram';
 import { cases } from '../data/cases';
 import { articles } from '../data/articles';
 
@@ -43,32 +44,33 @@ export default function Home() {
       <section
         className="section hero-section"
         style={{
-          paddingTop: 'clamp(40px, 6vw, 80px)',
-          paddingBottom: 'clamp(48px, 7vw, 88px)',
+          paddingTop: 'clamp(48px, 7vw, 96px)',
+          paddingBottom: 'clamp(56px, 8vw, 104px)',
+          background: 'linear-gradient(180deg, #F7F8FA 0%, #F3F5F7 100%)',
         }}
       >
         <div className="container">
           <div className="hero-grid">
-            {/* Left */}
+            {/* Left — 文字主体 */}
             <div className="hero-left fade-in">
               <span className="eyebrow">运营数字化 × AI 落地 · 汽车行业 19 年</span>
-              <h1 className="h-display" style={{ margin: '20px 0 22px' }}>
+              <h1 className="h-display" style={{ margin: '22px 0 24px' }}>
                 我在做企业运营体系的
                 <br />
                 <span style={{ color: 'var(--navy)' }}>数字化与 AI 落地</span>
               </h1>
 
-              <p className="brand-line" style={{ marginBottom: 26, maxWidth: '40ch' }}>
+              <p className="brand-line" style={{ marginBottom: 18, maxWidth: '40ch' }}>
                 先把业务流程理清，
                 <br />
                 再谈 AI。
               </p>
 
-              <p className="lead" style={{ fontSize: 16, maxWidth: '50ch', marginBottom: 30 }}>
+              <p className="lead" style={{ fontSize: 16, maxWidth: '48ch', marginBottom: 34 }}>
                 19 年汽车行业经验，从经销商运营、培训体系、客户体验、数字化项目，到今天的 AI 落地实践。
               </p>
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14 }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, alignItems: 'center' }}>
                 <Button to="/about" variant="primary" size="lg">
                   了解我的方法
                 </Button>
@@ -78,16 +80,28 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right — large hero portrait */}
+            {/* Right — 系统示意图 + 右下角小人物 */}
             <div className="hero-right fade-in fade-in--d1">
-              <div className="hero-portrait">
-                <img
-                  src={`${import.meta.env.BASE_URL}profile.png`}
-                  alt="麻明"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  loading="eager"
-                />
-                <div className="hero-portrait__overlay" />
+              <div className="hero-visual">
+                <div className="hero-diagram-head">
+                  <span className="hd-tag">运营数字化系统</span>
+                  <span className="hd-sub">Process → AI → Action</span>
+                </div>
+                <HeroFlowDiagram />
+
+                {/* 创始人小头像 — 身份背书 */}
+                <div className="hero-founder">
+                  <img
+                    src={`${import.meta.env.BASE_URL}profile.png`}
+                    alt="麻明"
+                    style={{ width: 44, height: 44, borderRadius: 10, objectFit: 'cover', border: '1px solid var(--line)' }}
+                    loading="lazy"
+                  />
+                  <div className="hero-founder__text">
+                    <strong>麻明</strong>
+                    <span>创始人 · 19 年汽车行业</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -109,49 +123,64 @@ export default function Home() {
         <style>{`
           .hero-grid {
             display: grid;
-            grid-template-columns: 1.05fr 0.95fr;
-            gap: clamp(32px, 5vw, 72px);
+            grid-template-columns: 1.08fr 0.92fr;
+            gap: clamp(40px, 6vw, 88px);
             align-items: center;
           }
-          .hero-portrait {
+          .hero-visual {
             position: relative;
-            width: 100%;
-            aspect-ratio: 4 / 5;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            background: linear-gradient(180deg, #EEF2F7, #DDE4ED);
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             border: 1px solid var(--line);
-            box-shadow: var(--shadow-lg);
+            border-radius: 20px;
+            padding: 28px 28px 24px;
+            box-shadow: var(--shadow-md);
           }
-          .hero-portrait__overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(180deg, transparent 60%, rgba(15,42,68,0.18));
-            pointer-events: none;
+          .hero-diagram-head {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 22px;
           }
+          .hd-tag {
+            font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
+            color: var(--navy); text-transform: uppercase;
+          }
+          .hd-sub {
+            font-size: 11px; color: var(--muted); letter-spacing: 0.06em;
+            font-family: 'Inter', sans-serif;
+          }
+          .hero-founder {
+            display: flex; align-items: center; gap: 12px;
+            margin-top: 22px; padding-top: 18px;
+            border-top: 1px solid var(--line);
+          }
+          .hero-founder__text { display: flex; flex-direction: column; line-height: 1.35; }
+          .hero-founder__text strong { font-size: 14px; color: var(--ink); font-weight: 600; }
+          .hero-founder__text span { font-size: 12px; color: var(--muted); }
           .hero-trust {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 14px;
-            margin-top: clamp(36px, 5vw, 56px);
+            margin-top: clamp(48px, 6vw, 72px);
           }
           .hero-trust__item {
             background: #fff;
             border: 1px solid var(--line);
             border-radius: var(--radius);
-            padding: 20px 22px;
-            transition: transform .2s ease, box-shadow .2s ease;
+            padding: 22px 24px;
+            box-shadow: var(--shadow-sm);
+            transition: border-color .2s ease;
           }
-          .hero-trust__item:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+          .hero-trust__item:hover { border-color: var(--accent); }
           @media (max-width: 880px) {
-            .hero-grid { grid-template-columns: 1fr !important; }
+            .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
             .hero-trust { grid-template-columns: repeat(2, 1fr) !important; }
-            .hero-portrait { aspect-ratio: 4 / 4 !important; max-width: 420px; }
           }
         `}</style>
       </section>
 
       {/* ===== Brand Wall ===== */}
-      <section className="section section--alt" style={{ padding: '48px 0' }}>
+      <section className="section section--tier2" style={{ padding: 'clamp(40px, 5vw, 64px) 0' }}>
         <div className="container">
           <div
             style={{
@@ -244,7 +273,7 @@ export default function Home() {
       </section>
 
       {/* ===== Section 4: 代表案例 ===== */}
-      <section className="section">
+      <section className="section section--tier2">
         <div className="container">
           <SectionHeader
             eyebrow="CASES"

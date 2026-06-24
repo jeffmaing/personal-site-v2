@@ -32,7 +32,8 @@ export default function CaseDetail() {
           .detail-cover-wrap {
             border-radius: var(--radius-lg);
             overflow: hidden;
-            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-md);
           }
           .detail-cover-wrap .case-cover { aspect-ratio: 21 / 9; }
         `}</style>
