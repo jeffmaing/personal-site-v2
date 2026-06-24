@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jeffmaing.github.io/personal-site-v2/sitemap.xml
